@@ -34,11 +34,11 @@ export default function Home() {
       <Preloader onComplete={() => setPreloaderDone(true)} />
 
       {/* Minimalist Exhibition Navigation */}
-      <Navbar />
+      <Navbar isLoaded={preloaderDone} />
 
       <main style={{ position: "relative", width: "100%", overflow: "hidden" }}>
         {/* Section 01: Hero 3D Handbag & Morphing Typography */}
-        <HeroSection onInspect={handleInspect} />
+        <HeroSection onInspect={handleInspect} isLoaded={preloaderDone} />
 
         {/* Section 03: The Collection (Horizontal Scrolling & Color Morph) */}
         <CollectionSection onInspect={handleInspect} />

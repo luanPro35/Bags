@@ -11,9 +11,6 @@ export default function Preloader({ onComplete }) {
   const handleOpenDoors = () => {
     if (phase === "opening" || phase === "done") return;
     setPhase("opening");
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("olius_intro_seen", "true");
-    }
     if (onCompleteRef.current) onCompleteRef.current();
 
     // Remove from DOM after doors fully slide open
@@ -24,22 +21,15 @@ export default function Preloader({ onComplete }) {
   };
 
   useEffect(() => {
-    // Only show once per session
-    if (typeof window !== "undefined" && sessionStorage.getItem("olius_intro_seen")) {
-      setIsRemoved(true);
-      if (onCompleteRef.current) onCompleteRef.current();
-      return;
-    }
-
     // Step 1: Center gold seam line & brand reveal
     const timerReveal = setTimeout(() => {
       setPhase("revealed");
-    }, 350);
+    }, 280);
 
     // Step 2: Automatic majestic grand opening after deliberate luxury pause
     const timerOpen = setTimeout(() => {
       handleOpenDoors();
-    }, 1900);
+    }, 1600);
 
     return () => {
       clearTimeout(timerReveal);
@@ -71,14 +61,13 @@ export default function Preloader({ onComplete }) {
           position: "absolute",
           top: 0,
           left: 0,
-          width: "50.5vw", // slight 0.5vw overlap to prevent 1px gap
+          width: "50.2vw", // slight overlap to prevent subpixel gap
           height: "100vh",
           backgroundColor: "#060606",
           transform: isOpening ? "translateX(-100%)" : "translateX(0%)",
           transition: "transform 1.25s cubic-bezier(0.83, 0, 0.17, 1)",
           willChange: "transform",
           boxShadow: isOpening ? "20px 0 60px rgba(0, 0, 0, 0.9)" : "none",
-          borderRight: "1px solid rgba(200, 183, 156, 0.35)",
         }}
       />
 
@@ -88,18 +77,17 @@ export default function Preloader({ onComplete }) {
           position: "absolute",
           top: 0,
           right: 0,
-          width: "50.5vw",
+          width: "50.2vw",
           height: "100vh",
           backgroundColor: "#060606",
           transform: isOpening ? "translateX(100%)" : "translateX(0%)",
           transition: "transform 1.25s cubic-bezier(0.83, 0, 0.17, 1)",
           willChange: "transform",
           boxShadow: isOpening ? "-20px 0 60px rgba(0, 0, 0, 0.9)" : "none",
-          borderLeft: "1px solid rgba(200, 183, 156, 0.35)",
         }}
       />
 
-      {/* CENTER GLOWING SEAM ACCENT */}
+      {/* SINGLE CENTER GLOWING SEAM ACCENT */}
       <div
         style={{
           position: "absolute",
@@ -108,11 +96,12 @@ export default function Preloader({ onComplete }) {
           transform: "translateX(-50%)",
           width: "1px",
           height: "100vh",
-          background: "linear-gradient(180deg, transparent 0%, rgba(200, 183, 156, 0.8) 50%, transparent 100%)",
+          background: "linear-gradient(180deg, transparent 0%, rgba(200, 183, 156, 0.5) 15%, rgba(200, 183, 156, 0.9) 50%, rgba(200, 183, 156, 0.5) 85%, transparent 100%)",
           opacity: isOpening ? 0 : isRevealed ? 0.8 : 0,
-          boxShadow: "0 0 24px rgba(200, 183, 156, 0.6)",
+          boxShadow: "0 0 16px rgba(200, 183, 156, 0.5)",
           transition: "opacity 0.6s ease",
           pointerEvents: "none",
+          zIndex: 3,
         }}
       />
 
@@ -160,10 +149,11 @@ export default function Preloader({ onComplete }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "rgba(14, 14, 14, 0.75)",
+            background: "#060606",
             backdropFilter: "blur(12px)",
             boxShadow: "0 4px 24px rgba(200, 183, 156, 0.25)",
             marginBottom: "18px",
+            zIndex: 5,
           }}
         >
           <span

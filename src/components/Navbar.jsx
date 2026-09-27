@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function Navbar() {
+export default function Navbar({ isLoaded = true }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activePreview, setActivePreview] = useState("/assets/hero_bag_noir.jpg");
@@ -44,7 +44,10 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          transition: "background-color 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease",
+          opacity: isLoaded ? 1 : 0,
+          transform: isLoaded ? "translateY(0)" : "translateY(-12px)",
+          transition:
+            "background-color 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease, opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s",
           backgroundColor: scrolled ? "rgba(10, 10, 10, 0.75)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
