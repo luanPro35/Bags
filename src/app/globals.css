@@ -1,0 +1,203 @@
+:root {
+  /* LUXÉA Luxury Palette */
+  --color-primary: #0a0a0a;
+  --color-primary-rgb: 10, 10, 10;
+  --color-ivory: #f4f0e8;
+  --color-ivory-rgb: 244, 240, 232;
+  --color-champagne: #c8b79c;
+  --color-champagne-rgb: 200, 183, 156;
+  --color-soft-beige: #ded6c9;
+  --color-soft-beige-rgb: 222, 214, 201;
+  --color-burgundy: #4b1820;
+  --color-burgundy-rgb: 75, 24, 32;
+  --color-pure-white: #ffffff;
+  --color-glass: rgba(244, 240, 232, 0.05);
+  --color-border-subtle: rgba(200, 183, 156, 0.2);
+
+  /* Typography variables */
+  --font-serif: var(--font-cormorant), 'Didot', 'Bodoni MT', 'Cinzel', Georgia, serif;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Exhibition transitions */
+  --transition-slow: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-cinematic: cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+html {
+  background-color: var(--color-primary);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  scroll-behavior: auto;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--color-primary);
+  color: var(--color-ivory);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+::selection {
+  background: var(--color-champagne);
+  color: var(--color-primary);
+}
+
+/* Film Grain Texture Overlay — animated for cinematic depth */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 110vw;
+  height: 110vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  animation: grainShift 6s steps(1, end) infinite;
+  will-change: transform;
+}
+
+@keyframes grainShift {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(-3%, -2%); }
+  20%  { transform: translate(2%, 3%); }
+  30%  { transform: translate(-2%, 1%); }
+  40%  { transform: translate(3%, -3%); }
+  50%  { transform: translate(-1%, 0); }
+  60%  { transform: translate(0, 2%); }
+  70%  { transform: translate(2%, -1%); }
+  80%  { transform: translate(-3%, 3%); }
+  90%  { transform: translate(3%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Typography Utilities */
+.font-serif { font-family: var(--font-serif); }
+.font-sans  { font-family: var(--font-sans); }
+
+.tracking-luxury {
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.tracking-wide {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.tracking-monumental {
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+}
+
+/* Luxury hairline borders */
+.hairline-b  { border-bottom: 1px solid var(--color-border-subtle); }
+.hairline-t  { border-top:    1px solid var(--color-border-subtle); }
+.hairline-all { border:       1px solid var(--color-border-subtle); }
+
+/* Lenis smooth scroll support */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+/* Glassmorphism panel */
+.luxury-glass {
+  background: rgba(10, 10, 10, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(200, 183, 156, 0.15);
+}
+.luxury-glass-light {
+  background: rgba(244, 240, 232, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(200, 183, 156, 0.25);
+}
+
+/* ─── Keyframe library ──────────────────────────────────────────── */
+
+/* Scroll indicator pulse */
+@keyframes pulseSubtle {
+  0%, 100% {
+    opacity: 0.35;
+    transform: translateY(0) scaleY(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateY(9px) scaleY(0.8);
+  }
+}
+.animate-pulse-subtle {
+  animation: pulseSubtle 2.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* Modal / overlay entrance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.982) translateY(16px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Text slide-up stagger */
+@keyframes slideUpReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Floating idle bob */
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* Glint shimmer sweep */
+@keyframes glintSweep {
+  0%   { background-position: -200% center; }
+  100% { background-position: 300% center; }
+}
+
+/* GPU compositing helper */
+.gpu-layer {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Crisp product images */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Hide native scrollbar entirely */
+::-webkit-scrollbar { width: 0; height: 0; }
+* { scrollbar-width: none; }
